@@ -1,4 +1,5 @@
 import {createGlobalStyle} from "styled-components";
+import {myTheme} from "./Theme.styled";
 
 export const GlobalStyled = createGlobalStyle`
   *,
@@ -10,7 +11,7 @@ export const GlobalStyled = createGlobalStyle`
   }
 
   body {
-    background-color: #a6a6a6;
+    background-color: ${myTheme.colors.grey.light};
 
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
