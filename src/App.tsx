@@ -21,8 +21,11 @@ const App = () => {
             </Menu>
             <Box>
                 <StyledBtn as={Link} href="#">Hello</StyledBtn>
-                <StyledBtn as="a" href="#">Hello</StyledBtn>
-                <SuperButton>Hello</SuperButton>
+                <StyledBtn color="red" as="a" href="#">Hello</StyledBtn>
+
+
+                <StyledBtn primary fontSize={"55px"}  as="a" href="#">primary</StyledBtn>
+                <SuperButton outlined fontSize={"55px"}>outlined</SuperButton>
             </Box>
 
             Hello, samurai! Let's go!
