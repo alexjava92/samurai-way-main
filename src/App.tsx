@@ -4,10 +4,13 @@ import styled from 'styled-components'
 import {StyledBtn, SuperButton} from "./components/Button.styled";
 import {Link} from "./components/Link.styled";
 import {Menu} from "./components/Menu.styled";
+import {GlobalStyled} from "./components/styles/GlobalStyled";
 
 const App = () => {
     return (
+
         <div className="App">
+            <GlobalStyled/>
             <Header/>
             <Menu>
                 <ul>
@@ -43,5 +46,10 @@ const Box = styled.div`
   ${Link} {
     cursor: zoom-in;
   }
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+  }
 `
+
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {MyAnimation} from "./styles/animations/Aniomations";
 
 
 export const StyledBtn = styled.button`
@@ -22,4 +23,9 @@ export const StyledBtn = styled.button`
 export const SuperButton = styled(StyledBtn)`
   border-radius: 5px;
   color: darkorange;
+  
+  &:hover {
+    animation: ${MyAnimation} 2s ease-in-out;
+  }
+  
 `
