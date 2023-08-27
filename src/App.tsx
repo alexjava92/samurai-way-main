@@ -7,53 +7,105 @@ import {Menu} from "./components/Menu.styled";
 import {GlobalStyled} from "./components/styles/GlobalStyled";
 import {myTheme} from "./components/styles/Theme.styled";
 import {StyledBox, StyledButton, StyledCard, StyledHeading, StyledImage, StyledText} from "./Card";
+import {Footer} from "./Footer";
 
 const App = () => {
     return (
 
-        <div className="App">
-            <ThemeProvider theme={myTheme}>
-                <GlobalStyled/>
-                <Header/>
-                <Menu>
-                    <ul>
-                        <li><a href=""> menu item 1</a></li>
-                        <li><a href=""> menu item 2</a></li>
-                        <li><a href=""> menu item 3</a></li>
-                    </ul>
-                </Menu>
-                <Box>
-                    <StyledCard>
-                        <StyledImage/>
-                        <StyledHeading>Headline</StyledHeading>
-                        <StyledText>
-                            Faucibus. Faucibus. Sit sit sapien sit tempusrisu ut.
-                            Sit molestie ornare in venen.
-                        </StyledText>
-                        <StyledBox>
-                        <StyledButton>See more</StyledButton>
-                        <StyledButton>Save</StyledButton>
-                        </StyledBox>
-                    </StyledCard>
-                </Box>
 
-                <Box>
-                    <StyledBtn as={Link} href="#">Hello</StyledBtn>
-                    <StyledBtn color="red" as="a" href="#">Hello</StyledBtn>
+        <StyledWrapper>
+            <StyledHeader>
+                <StyledImgLogo src="https://upload.wikimedia.org/wikipedia/commons/6/60/Logo-logosu.png"/>
+            </StyledHeader>
+            <StyledNav>
+                <div>
+                    <StyledLink href="">Profile</StyledLink>
+                </div>
+                <div>
+                    <StyledLink href="">Messages</StyledLink>
+                </div>
+                <div>
+                    <StyledLink href="">News</StyledLink>
+                </div>
+                <div>
+                    <StyledLink href="">Music</StyledLink>
+                </div>
+                <div>
+                    <StyledLink href="">Settings</StyledLink>
+                </div>
+            </StyledNav>
+            <StyledContent>
+                <StyledImg
+                    src="https://www.imgacademy.com/sites/default/files/styles/scale_1700w/public/2018-10/athletics-meta.jpg"/>
+                Main content
 
+                <div>ava+description</div>
+                <div>
+                    MyPosts
+                    <div>
+                        New Post
+                    </div>
+                </div>
+            </StyledContent>
+        </StyledWrapper>
 
-                    <StyledBtn color={myTheme.colors.primary} primary fontSize={"55px"} as="a"
-                               href="#">primary</StyledBtn>
-                    <SuperButton color={myTheme.colors.secondary} outlined fontSize={"55px"}>outlined</SuperButton>
-                </Box>
-            </ThemeProvider>
-
-            Hello, samurai! Let's go!
-        </div>
     );
 }
 
 export default App;
+
+const StyledWrapper = styled.div`
+
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  display: grid;
+  width: 1200px;
+  //margin: 0 auto;
+  margin: auto;
+
+  grid-template-areas: 
+  "h h"
+  "n c";
+
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  //grid-gap: 10px;
+
+`
+
+const StyledHeader = styled.header`
+  grid-area: h;
+  background-color: lightgrey;
+`
+const StyledImgLogo = styled.img`
+  max-width: 100px;
+  padding: 10px;
+
+`
+const StyledImg = styled.img`
+  max-width: 1000px;
+`
+
+const StyledNav = styled.nav`
+  grid-area: n;
+  background-color: lightslategrey;
+`
+
+const StyledContent = styled.div`
+  grid-area: c;
+  background-color: antiquewhite;
+`
+
+const StyledLink = styled.a`
+
+`
+
 
 const Box = styled.div`
   display: flex;
