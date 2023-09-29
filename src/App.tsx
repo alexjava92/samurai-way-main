@@ -1,54 +1,34 @@
 import React from 'react';
-import Header from "./Header";
-import styled, {ThemeProvider} from 'styled-components'
-import {StyledBtn, SuperButton} from "./components/Button.styled";
+import {Header} from "./components/header/Header";
+import styled from 'styled-components'
 import {Link} from "./components/Link.styled";
-import {Menu} from "./components/Menu.styled";
-import {GlobalStyled} from "./components/styles/GlobalStyled";
 import {myTheme} from "./components/styles/Theme.styled";
-import {StyledBox, StyledButton, StyledCard, StyledHeading, StyledImage, StyledText} from "./Card";
-import {Footer} from "./Footer";
+import {Navbar} from "./components/nav/Navbar";
+import {Profile} from "./components/propfile/Profile";
+import {Dialogs} from "./components/dialogs/Dialogs";
+import {BrowserRouter, Route} from "react-router-dom";
+import {MyPostTypeProps} from "./components/propfile/myPosts/MyPosts";
 
-const App = () => {
+
+
+
+const App = (props: MyPostTypeProps) => {
+    console.log(props.posts)
     return (
 
+        <BrowserRouter>
 
-        <StyledWrapper>
-            <StyledHeader>
-                <StyledImgLogo src="https://upload.wikimedia.org/wikipedia/commons/6/60/Logo-logosu.png"/>
-            </StyledHeader>
-            <StyledNav>
-                <div>
-                    <StyledLink href="">Profile</StyledLink>
-                </div>
-                <div>
-                    <StyledLink href="">Messages</StyledLink>
-                </div>
-                <div>
-                    <StyledLink href="">News</StyledLink>
-                </div>
-                <div>
-                    <StyledLink href="">Music</StyledLink>
-                </div>
-                <div>
-                    <StyledLink href="">Settings</StyledLink>
-                </div>
-            </StyledNav>
-            <StyledContent>
-                <StyledImg
-                    src="https://www.imgacademy.com/sites/default/files/styles/scale_1700w/public/2018-10/athletics-meta.jpg"/>
-                Main content
+            <StyledWrapper>
+                <Header/>
+                <Navbar/>
+                <StyledWrapperContent>
 
-                <div>ava+description</div>
-                <div>
-                    MyPosts
-                    <div>
-                        New Post
-                    </div>
-                </div>
-            </StyledContent>
-        </StyledWrapper>
+                    <Route path={"/dialogs"} component={Dialogs}/>
+                    <Route path={"/profile"} render={() => <Profile posts={props.posts} />} />
 
+                </StyledWrapperContent>
+            </StyledWrapper>
+        </BrowserRouter>
     );
 }
 
@@ -79,34 +59,6 @@ const StyledWrapper = styled.div`
 
 `
 
-const StyledHeader = styled.header`
-  grid-area: h;
-  background-color: lightgrey;
-`
-const StyledImgLogo = styled.img`
-  max-width: 100px;
-  padding: 10px;
-
-`
-const StyledImg = styled.img`
-  max-width: 1000px;
-`
-
-const StyledNav = styled.nav`
-  grid-area: n;
-  background-color: lightslategrey;
-`
-
-const StyledContent = styled.div`
-  grid-area: c;
-  background-color: antiquewhite;
-`
-
-const StyledLink = styled.a`
-
-`
-
-
 const Box = styled.div`
   display: flex;
   height: 100vh;
@@ -127,4 +79,8 @@ const Box = styled.div`
   }
 `
 
-
+const StyledWrapperContent = styled.div`
+  grid-area: c;
+  
+  
+`
