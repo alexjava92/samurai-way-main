@@ -14,6 +14,7 @@ export type MyPostTypeProps = {
     addPost: (text: string) => void
 }
 
+
 export const MyPosts = (props: MyPostTypeProps) => {
     const [text, setText] = useState('');
 
@@ -21,13 +22,14 @@ export const MyPosts = (props: MyPostTypeProps) => {
 
     const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setText(event.target.value);
-
-
     }
-    const handleAddPostClick = () => {
-        props.addPost(text);
 
-    };
+    const handleAddPostClick = () => {
+        if (text) {  // Добавьте эту проверку, чтобы предотвратить добавление пустого текста
+            props.addPost(text);
+            setText('');
+        }
+    }
 
     return (
         <StyledMyPost>
@@ -35,10 +37,10 @@ export const MyPosts = (props: MyPostTypeProps) => {
             <div>
                 <div>
                     <StyledTextField variant="outlined"
-                               label="My Post"
-                               id="outlined-basic"
-                               onChange={handleChange}
-                               value={text}></StyledTextField >
+                                     label="My Post"
+                                     id="outlined-basic"
+                                     onChange={handleChange}
+                                     value={text}></StyledTextField>
                 </div>
                 <StyledButton variant="contained" onClick={handleAddPostClick}>Add post</StyledButton>
                 <div>
@@ -53,7 +55,7 @@ export const MyPosts = (props: MyPostTypeProps) => {
 const StyledMyPost = styled.div`
   background-color: antiquewhite;
   padding: 20px;
-  
+
 `
 const StyledH3 = styled.h3`
   margin-top: 10px;
@@ -62,10 +64,10 @@ const StyledH3 = styled.h3`
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 20px;
-  width: 80%;  // если вы хотите, чтобы поле ввода занимало всю ширину контейнера
-  padding: 100px;  // добавьте отступ вокруг текста внутри поля ввода
+  width: 80%; // если вы хотите, чтобы поле ввода занимало всю ширину контейнера
+  padding: 100px; // добавьте отступ вокруг текста внутри поля ввода
 `;
 
 const StyledButton = styled(Button)`
-  padding: 100px 200px;  // добавьте отступ вокруг текста внутри кнопки
+  padding: 100px 200px; // добавьте отступ вокруг текста внутри кнопки
 `;

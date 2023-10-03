@@ -60,5 +60,6 @@ export const addPost = (postMessage: string) => {
         likeCount: 0
     }
     state.profilePage.posts.push(newPost)
+
 }
 
