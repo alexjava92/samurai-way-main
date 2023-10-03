@@ -7,24 +7,26 @@ import {Navbar} from "./components/nav/Navbar";
 import {Profile} from "./components/propfile/Profile";
 import {Dialogs} from "./components/dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {MyPostTypeProps} from "./components/propfile/myPosts/MyPosts";
+import {RootStateType, state} from "./components/redux/State";
+
+type AppProps = {
+    state: RootStateType;
+    addPost: (text: string) => void
+}
 
 
+const App = (props: AppProps) => {
 
-
-const App = (props: MyPostTypeProps) => {
-    console.log(props.posts)
     return (
 
         <BrowserRouter>
-
             <StyledWrapper>
                 <Header/>
                 <Navbar/>
                 <StyledWrapperContent>
 
-                    <Route path={"/dialogs"} component={Dialogs}/>
-                    <Route path={"/profile"} render={() => <Profile posts={props.posts} />} />
+                    <Route path={"/dialogs"} render={() => <Dialogs dialogsPage={props.state.dialogsPage} />}/>
+                    <Route path={"/profile"} render={() => <Profile posts={props.state.profilePage.posts} addPost={props.addPost}/>} />
 
                 </StyledWrapperContent>
             </StyledWrapper>

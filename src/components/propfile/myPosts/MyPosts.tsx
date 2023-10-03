@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styled from "styled-components";
 import {Post} from "./post/Post";
+import {Button, TextField} from "@mui/material";
 
 type PostType = {
     id: number;
@@ -10,27 +11,36 @@ type PostType = {
 
 export type MyPostTypeProps = {
     posts: PostType[];
+    addPost: (text: string) => void
 }
 
 export const MyPosts = (props: MyPostTypeProps) => {
+    const [text, setText] = useState('');
 
-    // let posts = [
-    //     {id: 1, message: "Hello bro88787", likeCount: 12},
-    //     {id: 2, message: "Все в порядке ", likeCount: 1},
-    //     {id: 3, message: "Denis React ", likeCount: 1},
-    //     {id: 4, message: "Alexey don`t no error", likeCount: 1}
-    // ]
+    let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likeCount}/>)
 
-    let postsElements = props.posts.map(p=> <Post message={p.message} likesCount={p.likeCount}/>)
+    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        setText(event.target.value);
+
+
+    }
+    const handleAddPostClick = () => {
+        props.addPost(text);
+
+    };
 
     return (
         <StyledMyPost>
             <StyledH3>My Post</StyledH3>
             <div>
                 <div>
-                <textarea ></textarea>
+                    <StyledTextField variant="outlined"
+                               label="My Post"
+                               id="outlined-basic"
+                               onChange={handleChange}
+                               value={text}></StyledTextField >
                 </div>
-                <StyledBtn>Add post</StyledBtn>
+                <StyledButton variant="contained" onClick={handleAddPostClick}>Add post</StyledButton>
                 <div>
                     New Post
                 </div>
@@ -42,29 +52,20 @@ export const MyPosts = (props: MyPostTypeProps) => {
 
 const StyledMyPost = styled.div`
   background-color: antiquewhite;
-  padding: 10px;
+  padding: 20px;
+  
 `
 const StyledH3 = styled.h3`
- margin-top: 10px;
+  margin-top: 10px;
+  padding: 20px;
 `
 
-const StyledBtn = styled.button`
-  width: 100px;
-  background-color: #007bff;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  text-decoration: none;
-  
-  &:hover{
-    background-color: #64b5f6;
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  &:active{
-    background-color: #2196F3;
-    transition: background-color 0.2s ease-in-out;
-  }
-`
+const StyledTextField = styled(TextField)`
+  margin-bottom: 20px;
+  width: 80%;  // если вы хотите, чтобы поле ввода занимало всю ширину контейнера
+  padding: 100px;  // добавьте отступ вокруг текста внутри поля ввода
+`;
+
+const StyledButton = styled(Button)`
+  padding: 100px 200px;  // добавьте отступ вокруг текста внутри кнопки
+`;

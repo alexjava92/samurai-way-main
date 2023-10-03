@@ -1,26 +1,31 @@
-import React from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styled from "styled-components";
 import {DialogItem} from "./dialogItem/DialogItem";
 import {Message} from "./message/Message";
+import {DialogPageType} from "../redux/State";
 
 
-let dialogs = [
-    {id: 1, name: "Alex"},
-    {id: 2, name: "Andrey"},
-    {id: 3, name: "Denis"},
-    {id: 4, name: "Alexey"}
-]
-let messages = [
-    {id: 1, message: "hi"},
-    {id: 2, message: "yo"},
-    {id: 3, message: "how is your"},
-    {id: 4, message: "hi"}
-]
 
-let dialogsElements = dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
-let messagesElements = messages.map(m => <Message message={m.message}/>)
+type DialogsProps = {
+    dialogsPage: DialogPageType;
+}
 
-export const Dialogs = () => {
+
+
+export const Dialogs = (props: DialogsProps) => {
+
+    let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} id={d.id}/>)
+    let messagesElements = props.dialogsPage.messages.map(m => <Message message={m.message}/>)
+
+    const [message, setMessage] = useState('');
+    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        setMessage(event.target.value);
+    }
+
+    const addPost = () => {
+        alert(message)
+    }
+
 
     return (
         <StyledDialogs>
@@ -32,6 +37,9 @@ export const Dialogs = () => {
             <StyledMessages>
                 {messagesElements}
             </StyledMessages>
+
+            <textarea onChange={handleChange} value={message}></textarea>
+            <button onClick={addPost}>add</button>
 
         </StyledDialogs>
     );
