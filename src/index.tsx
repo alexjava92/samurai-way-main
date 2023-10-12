@@ -7,7 +7,7 @@ import {store} from "./components/redux/State";
 
 ReactDOM.render(
 
-    <App state={store.getSate()} addPost={store.addPost.bind(store)}/>,
+    <App   store={store.getState()}/>,
 
   document.getElementById('root')
 

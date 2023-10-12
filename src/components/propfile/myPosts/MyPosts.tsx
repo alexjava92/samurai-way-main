@@ -2,6 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import styled from "styled-components";
 import {Post} from "./post/Post";
 import {Button, TextField} from "@mui/material";
+import {ActionsTypes} from "../../redux/State";
 
 type PostType = {
     id: number;
@@ -11,7 +12,8 @@ type PostType = {
 
 export type MyPostTypeProps = {
     posts: PostType[];
-    addPost: (text: string) => void
+
+    dispatch: (action: ActionsTypes) => void
 }
 
 
@@ -25,8 +27,8 @@ export const MyPosts = (props: MyPostTypeProps) => {
     }
 
     const handleAddPostClick = () => {
-        if (text) {  // Добавьте эту проверку, чтобы предотвратить добавление пустого текста
-            props.addPost(text);
+        if (text) {
+            props.dispatch({type:"ADD-POST", postText: text});
             setText('');
         }
     }

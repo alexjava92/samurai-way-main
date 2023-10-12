@@ -7,15 +7,18 @@ import {Navbar} from "./components/nav/Navbar";
 import {Profile} from "./components/propfile/Profile";
 import {Dialogs} from "./components/dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {RootStateType} from "./components/redux/State";
+import {RootStateType, store} from "./components/redux/State";
 
 type AppProps = {
-    state: RootStateType;
-    addPost: (text: string) => void
+    store: RootStateType;
+
+    // addPost: (text: string) => void
 }
 
 
-const App = (props: AppProps) => {
+const App: React.FC<AppProps> = (props) => {
+
+    const state = store.getState()
 
     return (
 
@@ -25,9 +28,9 @@ const App = (props: AppProps) => {
                 <Navbar/>
                 <StyledWrapperContent>
 
-                    <Route path={"/dialogs"} render={() => <Dialogs dialogsPage={props.state.dialogsPage} />}/>
-                    <Route path={"/profile"} render={() => <Profile posts={props.state.profilePage.posts} addPost={props.addPost}/>} />
-
+                    <Route path={"/dialogs"}  render={() => <Dialogs dialogsPage={state.dialogsPage}/>}/>
+                    <Route path={"/profile"}  render={() => <Profile dispatch={store.dispatch.bind(store)} posts={state.profilePage.posts}
+                                                                    />}/>
                 </StyledWrapperContent>
             </StyledWrapper>
         </BrowserRouter>
@@ -83,6 +86,6 @@ const Box = styled.div`
 
 const StyledWrapperContent = styled.div`
   grid-area: c;
-  
-  
+
+
 `

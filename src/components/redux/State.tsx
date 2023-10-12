@@ -1,6 +1,7 @@
 type MessageType = {
     id: number
     message: string
+
 }
 type DialogType = {
     id: number
@@ -26,12 +27,26 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 
-export type StateType = {
 
-    state: RootStateType
+
+export type StoreType = {
+    _state: RootStateType
+
+    _onChange: () => void
+    subscribe: (callback: () => void) => void
+    getState: () => RootStateType
+    dispatch: (action: ActionsTypes) => void
 }
 
-export let store = {
+export type AddPostActionType = {
+    type: 'ADD-POST'
+    postText: string
+}
+
+export type ActionsTypes = AddPostActionType;
+
+
+export let store: StoreType = {
     _state: {
         profilePage: {
             posts: [
@@ -59,17 +74,41 @@ export let store = {
 
     },
 
-     getSate() {
-        return this._state
-     },
 
-    addPost(postMessage: string) {
-        let newPost: PostType = {
-            id: 5,
-            message: postMessage,
-            likeCount: 0
+    /* changeNewText(newText: string) {
+         this._state.profilePage.messageForNewPost = newText
+         this._onChange()
+     },*/
+
+
+
+    _onChange() {
+        console.log('state changed')
+    },
+
+    subscribe(callback) {
+        this._onChange = callback
+    },
+
+    getState() {
+        return this._state
+    },
+
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            let newPost: PostType = {
+                id: new Date().getTime(),
+                message: action.postText,
+                likeCount: 100
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._onChange()
+        } else if (action.type === '') {
+            /* changeNewText(newText: string) {
+        this._state.profilePage.messageForNewPost = newText
+        this._onChange()
+    },*/
         }
-        this._state.profilePage.posts.push(newPost)
 
     }
 }
