@@ -2,12 +2,15 @@ import React, {ChangeEvent, useState} from 'react';
 import styled from "styled-components";
 import {DialogItem} from "./dialogItem/DialogItem";
 import {Message} from "./message/Message";
-import {DialogPageType} from "../redux/State";
+import {ActionsTypes, DialogPageType} from "../../redux/State";
+import {sendMessageAC} from "../../redux/Dialogs-reducer";
+
 
 
 
 type DialogsProps = {
     dialogsPage: DialogPageType;
+    dispatch: (action: ActionsTypes) => void
 }
 
 
@@ -23,7 +26,9 @@ export const Dialogs = (props: DialogsProps) => {
     }
 
     const addPost = () => {
-        alert(message)
+        props.dispatch(sendMessageAC(message))
+        setMessage("")
+
     }
 
 
@@ -35,11 +40,12 @@ export const Dialogs = (props: DialogsProps) => {
                 </StyledDialog>
             </StyledDialogsItems>
             <StyledMessages>
-                {messagesElements}
+                <div>{messagesElements}</div>
+                <textarea onChange={handleChange} value={message}></textarea>
+                <button onClick={addPost}>add</button>
             </StyledMessages>
 
-            <textarea onChange={handleChange} value={message}></textarea>
-            <button onClick={addPost}>add</button>
+
 
         </StyledDialogs>
     );

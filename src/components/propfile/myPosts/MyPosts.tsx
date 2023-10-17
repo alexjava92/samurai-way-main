@@ -2,7 +2,9 @@ import React, {ChangeEvent, useState} from 'react';
 import styled from "styled-components";
 import {Post} from "./post/Post";
 import {Button, TextField} from "@mui/material";
-import {ActionsTypes} from "../../redux/State";
+import {ActionsTypes} from "../../../redux/State";
+import {addPostAC} from "../../../redux/Profile-reducer";
+
 
 type PostType = {
     id: number;
@@ -14,11 +16,15 @@ export type MyPostTypeProps = {
     posts: PostType[];
 
     dispatch: (action: ActionsTypes) => void
+
 }
+
 
 
 export const MyPosts = (props: MyPostTypeProps) => {
     const [text, setText] = useState('');
+
+
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likeCount}/>)
 
@@ -28,7 +34,7 @@ export const MyPosts = (props: MyPostTypeProps) => {
 
     const handleAddPostClick = () => {
         if (text) {
-            props.dispatch({type:"ADD-POST", postText: text});
+            props.dispatch(addPostAC(text));
             setText('');
         }
     }

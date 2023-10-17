@@ -1,3 +1,6 @@
+import {profileReducer} from "./Profile-reducer";
+import {dialogsReducer} from "./Dialogs-reducer";
+
 type MessageType = {
     id: number
     message: string
@@ -7,17 +10,18 @@ type DialogType = {
     id: number
     name: string
 }
-type PostType = {
+export type PostType = {
     id: number
     message: string
     likeCount: number
 }
-type ProfilePageType = {
+export type ProfilePageType = {
     posts: Array<PostType>
 }
 export type DialogPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
+    newMessageBody: string
 }
 type SidebarType = {}
 
@@ -28,22 +32,33 @@ export type RootStateType = {
 }
 
 
-
 export type StoreType = {
     _state: RootStateType
-
     _onChange: () => void
     subscribe: (callback: () => void) => void
     getState: () => RootStateType
     dispatch: (action: ActionsTypes) => void
 }
 
-export type AddPostActionType = {
-    type: 'ADD-POST'
-    postText: string
-}
+export type AddPostAction = {
+    type: typeof ADD_POST;
+    postText: string;
+};
 
-export type ActionsTypes = AddPostActionType;
+type UpdateNewMessageAction = {
+    type: typeof UPDATE_NEW_MESSAGE_BODY;
+    body: string;
+};
+
+export type SendMessageAction = {
+    type: typeof SEND_MESSAGE;
+    message: string
+};
+export type ActionsTypes = AddPostAction | UpdateNewMessageAction | SendMessageAction;
+
+export const ADD_POST = 'ADD_POST'
+export const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
+export const SEND_MESSAGE = 'SEND_MESSAGE'
 
 
 export let store: StoreType = {
@@ -69,18 +84,11 @@ export let store: StoreType = {
                 {id: 3, message: "how is your"},
                 {id: 4, message: "hi"}
             ],
+            newMessageBody: "",
         },
         sidebar: {}
 
     },
-
-
-    /* changeNewText(newText: string) {
-         this._state.profilePage.messageForNewPost = newText
-         this._onChange()
-     },*/
-
-
 
     _onChange() {
         console.log('state changed')
@@ -95,22 +103,11 @@ export let store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
-            let newPost: PostType = {
-                id: new Date().getTime(),
-                message: action.postText,
-                likeCount: 100
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._onChange()
-        } else if (action.type === '') {
-            /* changeNewText(newText: string) {
-        this._state.profilePage.messageForNewPost = newText
-        this._onChange()
-    },*/
-        }
+
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+
 
     }
 }
-
-

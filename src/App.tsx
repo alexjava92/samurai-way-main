@@ -7,18 +7,17 @@ import {Navbar} from "./components/nav/Navbar";
 import {Profile} from "./components/propfile/Profile";
 import {Dialogs} from "./components/dialogs/Dialogs";
 import {BrowserRouter, Route} from "react-router-dom";
-import {RootStateType, store} from "./components/redux/State";
+import {RootStateType, store} from "./redux/State";
 
 type AppProps = {
     store: RootStateType;
 
-    // addPost: (text: string) => void
 }
 
 
 const App: React.FC<AppProps> = (props) => {
 
-    const state = store.getState()
+    const state = props.store
 
     return (
 
@@ -28,8 +27,11 @@ const App: React.FC<AppProps> = (props) => {
                 <Navbar/>
                 <StyledWrapperContent>
 
-                    <Route path={"/dialogs"}  render={() => <Dialogs dialogsPage={state.dialogsPage}/>}/>
-                    <Route path={"/profile"}  render={() => <Profile dispatch={store.dispatch.bind(store)} posts={state.profilePage.posts}
+                    <Route path={"/dialogs"}  render={() => <Dialogs dispatch={store.dispatch.bind(store)}
+                                                                     dialogsPage={state.dialogsPage}/>}/>
+
+                    <Route path={"/profile"}  render={() => <Profile dispatch={store.dispatch.bind(store)}
+                                                                     posts={state.profilePage.posts}
                                                                     />}/>
                 </StyledWrapperContent>
             </StyledWrapper>
